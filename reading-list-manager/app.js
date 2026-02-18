@@ -5,6 +5,9 @@
 const readingList = require('./readingList');
 const chalk = require('chalk');
 
+console.log('📚 MY READING LIST 📚\n');
+
+// Your implementation here
 function main() {
   console.log(chalk.blue('=== MY READING LIST ==='));
 
@@ -22,7 +25,3 @@ function main() {
 }
 
 main();
-
-console.log('📚 MY READING LIST 📚\n');
-
-// Your implementation here
