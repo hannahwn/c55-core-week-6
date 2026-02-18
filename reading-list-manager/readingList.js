@@ -68,12 +68,45 @@ function addBook(books, titles, author, genre) {
 
 }
 
-function getUnreadBooks() {
+function getUnreadBooks(books) {
   // TODO: Implement this function using filter()
+   const unreadBooks = books.filter(function(book) {
+    return book.read === false;
+  });
+
+  console.log(chalk.blue('\n--- UNREAD BOOKS ---'));
+  if (unreadBooks.length === 0) {
+    console.log(chalk.yellow('No unread books!'));
+  } else {
+    for (let i = 0; i < unreadBooks.length; i++) {
+      const book = unreadBooks[i];
+      console.log(`${book.id}. ${book.title} by ${book.author}`);
+    }
+  }
+  
+  return unreadBooks;
+
+
 }
 
-function getBooksByGenre(genre) {
+function getBooksByGenre(books, genre) {
   // TODO: Implement this function using filter()
+   const genreBooks = books.filter(function(book) {
+    return book.genre.toLowerCase() === genre.toLowerCase();
+  });
+
+  console.log(chalk.blue(`\n--- ${genre} BOOKS ---`));
+  if (genreBooks.length === 0) {
+    console.log(chalk.yellow(`No ${genre} books!`));
+  } else {
+    for (let i = 0; i < genreBooks.length; i++) {
+      const book = genreBooks[i];
+      const readStatus = book.read ? '✓' : '○';
+      console.log(`${readStatus} ${book.id}. ${book.title} by ${book.author}`);
+    }
+  }
+  
+  return genreBooks;
 }
 
 function markAsRead(id) {
