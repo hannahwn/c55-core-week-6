@@ -1,11 +1,29 @@
 // Place here the file operation functions for loading and saving books
+const fs = require('fs');
+const chalk = require('chalk');
+
+const FILE_NAME = 'books.json';
 
 function loadBooks() {
   // TODO: Implement this function
-  // Read from books.json
+   // Read from books.json
+  try{
+    const data = fs.readdirSync(FILE_NAME,'utf8');
+    return JSON.parse(data);
+  }
   // Handle missing file (create empty array)
-  // Handle invalid JSON (notify user, use empty array)
-  // Use try-catch for error handling
+  catch (error){
+    if (error.code === 'ENOENT'){
+      console.log(chalk.yellow('No books file found.Starting again'));
+      return[];
+    }
+      // Handle invalid JSON (notify user, use empty array)
+      if (error instanceof SyntaxError){
+        console.log(chalk.red('Error loading books:'), error.message);
+        return[];
+      }
+  }
+  //Use try-catch for error handling
 }
 
 function saveBooks(books) {
