@@ -19,17 +19,28 @@ function loadBooks() {
     }
       // Handle invalid JSON (notify user, use empty array)
       if (error instanceof SyntaxError){
-        console.log(chalk.red('Error loading books:'), error.message);
+        console.log(chalk.red('Book file is broken. Starting fresh!'));
         return[];
       }
+      //Use try-catch for error handling
+      console.log(chalk.red('Error loading books:'),error.message);
+      return[];
   }
-  //Use try-catch for error handling
+  
 }
 
 function saveBooks(books) {
   // TODO: Implement this function
   // Write books array to books.json
   // Use try-catch for error handling
+  try{
+    const data =JSON.stringify(books,null,2);
+    fs.writeFileSync(FILE_NAME,data);
+    console.log(chalk.green('Saved :'));
+  }
+  catch (error){
+    console.log(chalk.red('Save failed'),error.message);
+  }
 }
 
 function addBook(book) {
