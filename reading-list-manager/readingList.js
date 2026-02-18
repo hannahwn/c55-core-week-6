@@ -147,22 +147,51 @@ function markAsRead(books, id) {
 
   
 
-function getTotalBooks() {
+function getTotalBooks(books) {
   // TODO: Implement this function using length
    const total = books.length;
   console.log(chalk.blue(`\nTotal books: ${total}`));
   return total;
 }
 
-function hasUnreadBooks() {
+function hasUnreadBooks(books) {
   // TODO: Implement this function using some()
+  const hasUnread = books.some(function(book) {
+    return book.read === false;
+  });
+  
+  if (hasUnread) {
+    console.log(chalk.yellow('You have books to read!'));
+  } else {
+    console.log(chalk.green('All books are read!'));
+  }
+  
+  return hasUnread;
+
 }
 
-function printAllBooks() {
+function printAllBooks(books) {
   // TODO: Implement this function
   // Loop through and display with chalk
   // Use green for read books, yellow for unread
   // Use cyan for titles
+  console.log(chalk.blue('\n--- ALL BOOKS ---'));
+  
+  if (books.length === 0) {
+    console.log(chalk.yellow('No books yet!'));
+    return;
+  }
+  
+  for (let i = 0; i < books.length; i++) {
+    const book = books[i];
+    let status;
+    if (book.read) {
+      status = chalk.green('✓ Read');
+    } else {
+      status = chalk.red('○ Unread');
+    }
+    console.log(`${book.id}. ${book.title} by ${book.author} - ${status}`);
+  }
 }
 
 function printSummary() {
@@ -170,4 +199,5 @@ function printSummary() {
   // Show statistics with chalk
   // Display total books, read count, unread count
   // Use bold for stats
+  
 }
