@@ -21,7 +21,7 @@ function main() {
   readingList.getBooksByGenre(myBooks, 'Fiction');
   // 5. Add example of marking a book as read
   console.log(chalk.blue('/n === Marking a book as read ==='));
-  myBooks = readingList.markAsRead(myBooks);
+  myBooks = readingList.markAsRead(myBooks, 7);
 }
 
 main();

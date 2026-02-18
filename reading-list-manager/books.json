@@ -6,7 +6,6 @@
     "genre": "Fiction",
     "read": false
   },
-
   {
     "id": 2,
     "title": "The Havoc of Choice",
@@ -14,7 +13,6 @@
     "genre": "African Literature",
     "read": true
   },
-
   {
     "id": 3,
     "title": "CreepShow",
@@ -22,7 +20,6 @@
     "genre": "Comic",
     "read": false
   },
-
   {
     "id": 4,
     "title": "Fire and Ice",
@@ -30,7 +27,6 @@
     "genre": "Fiction",
     "read": true
   },
-
   {
     "id": 5,
     "title": "Toxic Bachelors",
@@ -38,7 +34,6 @@
     "genre": "Adult",
     "read": false
   },
-
   {
     "id": 6,
     "title": "Foxes in a fix",
@@ -46,12 +41,11 @@
     "genre": "Animals",
     "read": true
   },
-
   {
     "id": 7,
     "title": "The Luzhin Defense",
     "author": "Vladimir Nabokov",
     "genre": "Chess",
-    "read": false
+    "read": true
   }
 ]
