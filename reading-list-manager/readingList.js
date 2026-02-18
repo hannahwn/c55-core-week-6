@@ -194,10 +194,31 @@ function printAllBooks(books) {
   }
 }
 
-function printSummary() {
+function printSummary(books) {
   // TODO: Implement this function
   // Show statistics with chalk
   // Display total books, read count, unread count
   // Use bold for stats
+  console.log(chalk.blue('\n--- READING SUMMARY ---'));
+  
+  // Total books
+  const total = books.length;
+  console.log(`Total: ${total}`);
+  
+  // Count read books
+  let readCount = 0;
+  for (let i = 0; i < books.length; i++) {
+    if (books[i].read) {
+      readCount++;
+    }
+  }
+  const unreadCount = total - readCount;
+  
+  console.log(chalk.green(`Read: ${readCount}`));
+  console.log(chalk.red(`Unread: ${unreadCount}`));
+
+}
+
+module.exports = {
   
 }
