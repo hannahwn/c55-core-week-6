@@ -197,7 +197,9 @@ function printAllBooks(books) {
     } else {
       status = chalk.red('○ Unread');
     }
-    console.log(`${book.id}. ${book.title} by ${book.author} - ${status}`);
+    console.log(
+      `${book.id}.${chalk.cyan(book.title)} by ${book.author} - ${status}`
+    );
   }
 }
 
