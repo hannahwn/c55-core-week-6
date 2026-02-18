@@ -109,12 +109,49 @@ function getBooksByGenre(books, genre) {
   return genreBooks;
 }
 
-function markAsRead(id) {
+function markAsRead(books, id) {
   // TODO: Implement this function using map()
+  const updatedBooks = books.map(function(book) {
+
+    if (book.id === id) {
+       return {
+        id: book.id,
+        title: book.title,
+        author: book.author,
+        genre: book.genre,
+        read: true
+      };
+    }
+    
+    return book;
+  });
+
+  //Does book exist?
+
+  const oldBook = books.find(function(book) {
+    return book.id === id;
+  });
+  
+  if (!oldBook) {
+    console.log(chalk.red(`✗ Book #${id} not found!`));
+    return books;
+  }
+  
+  // Save changes
+  saveBooks(updatedBooks);
+  console.log(chalk.green(`✓ Marked "${oldBook.title}" as read!`));
+  
+  return updatedBooks;
 }
+
+
+  
 
 function getTotalBooks() {
   // TODO: Implement this function using length
+   const total = books.length;
+  console.log(chalk.blue(`\nTotal books: ${total}`));
+  return total;
 }
 
 function hasUnreadBooks() {
