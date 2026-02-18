@@ -5,41 +5,46 @@ const chalk = require('chalk');
 const FILE_NAME = 'books.json';
 
 function loadBooks() {
-  // TODO: Implement this function
-   // Read from books.json
-  try{
-    const data = fs.readdirSync(FILE_NAME,'utf8');
-    return JSON.parse(data);
-  }
-  // Handle missing file (create empty array)
-  catch (error){
-    if (error.code === 'ENOENT'){
-      console.log(chalk.yellow('No books file found.Starting again'));
-      return[];
+  try {
+    const content = fs.readFileSync('./books.json', 'utf8');
+    const books = JSON.parse(content);
+
+    if (!Array.isArray(books)) {
+      console.log(chalk.yellow('Books data was not an array – starting fresh'));
+      return [];
     }
-      // Handle invalid JSON (notify user, use empty array)
-      if (error instanceof SyntaxError){
-        console.log(chalk.red('Book file is broken. Starting fresh!'));
-        return[];
-      }
-      //Use try-catch for error handling
-      console.log(chalk.red('Error loading books:'),error.message);
-      return[];
+
+    return books;
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      console.log(
+        chalk.yellow('No books.json found. Starting with empty list.')
+      );
+      return [];
+    }
+    if (error instanceof SyntaxError) {
+      console.log(
+        chalk.red(
+          'Invalid JSON in books.json – file is broken. Starting fresh!'
+        )
+      );
+      return [];
+    }
+    console.log(chalk.red('Error loading books:'), error.message);
+    return [];
   }
-  
 }
 
 function saveBooks(books) {
   // TODO: Implement this function
   // Write books array to books.json
   // Use try-catch for error handling
-  try{
-    const data =JSON.stringify(books,null,2);
-    fs.writeFileSync(FILE_NAME,data);
+  try {
+    const data = JSON.stringify(books, null, 2);
+    fs.writeFileSync(FILE_NAME, data);
     console.log(chalk.green('Saved :'));
-  }
-  catch (error){
-    console.log(chalk.red('Save failed'),error.message);
+  } catch (error) {
+    console.log(chalk.red('Save failed'), error.message);
   }
 }
 
@@ -51,26 +56,21 @@ function addBook(books, titles, author, genre) {
     title: title,
     author: author,
     genre: genre,
-    read: false
+    read: false,
   };
 
-  
   books.push(newBook);
-  
-  
+
   saveBooks(books);
-  
-  
+
   console.log(chalk.green(`✓ Added "${title}"`));
-  
+
   return books;
-
-
 }
 
 function getUnreadBooks(books) {
   // TODO: Implement this function using filter()
-   const unreadBooks = books.filter(function(book) {
+  const unreadBooks = books.filter(function (book) {
     return book.read === false;
   });
 
@@ -83,19 +83,31 @@ function getUnreadBooks(books) {
       console.log(`${book.id}. ${book.title} by ${book.author}`);
     }
   }
-  
+
   return unreadBooks;
-
-
 }
 
 function getBooksByGenre(books, genre) {
   // TODO: Implement this function using filter()
-   const genreBooks = books.filter(function(book) {
-    return book.genre.toLowerCase() === genre.toLowerCase();
-  });
+
+  console.log('DEBUG → books type:', typeof books);
+  console.log('DEBUG → is array?:', Array.isArray(books));
+  console.log(
+    'DEBUG → books length:',
+    books?.length ?? 'N/A (books not array)'
+  );
+
+  // Safe filter – prevents crash even if array has holes, undefined items, null, etc.
+  const genreBooks = books.filter(
+    (book) =>
+      book &&
+      typeof book === 'object' && // exists & is object (not null/undefined)
+      typeof book.genre === 'string' && // genre exists and is actually a string
+      book.genre.toLowerCase() === genre.toLowerCase()
+  );
 
   console.log(chalk.blue(`\n--- ${genre} BOOKS ---`));
+
   if (genreBooks.length === 0) {
     console.log(chalk.yellow(`No ${genre} books!`));
   } else {
@@ -105,69 +117,64 @@ function getBooksByGenre(books, genre) {
       console.log(`${readStatus} ${book.id}. ${book.title} by ${book.author}`);
     }
   }
-  
+
   return genreBooks;
 }
 
 function markAsRead(books, id) {
   // TODO: Implement this function using map()
-  const updatedBooks = books.map(function(book) {
-
+  const updatedBooks = books.map(function (book) {
     if (book.id === id) {
-       return {
+      return {
         id: book.id,
         title: book.title,
         author: book.author,
         genre: book.genre,
-        read: true
+        read: true,
       };
     }
-    
+
     return book;
   });
 
   //Does book exist?
 
-  const oldBook = books.find(function(book) {
+  const oldBook = books.find(function (book) {
     return book.id === id;
   });
-  
+
   if (!oldBook) {
     console.log(chalk.red(`✗ Book #${id} not found!`));
     return books;
   }
-  
+
   // Save changes
   saveBooks(updatedBooks);
   console.log(chalk.green(`✓ Marked "${oldBook.title}" as read!`));
-  
+
   return updatedBooks;
 }
 
-
-  
-
 function getTotalBooks(books) {
   // TODO: Implement this function using length
-   const total = books.length;
+  const total = books.length;
   console.log(chalk.blue(`\nTotal books: ${total}`));
   return total;
 }
 
 function hasUnreadBooks(books) {
   // TODO: Implement this function using some()
-  const hasUnread = books.some(function(book) {
+  const hasUnread = books.some(function (book) {
     return book.read === false;
   });
-  
+
   if (hasUnread) {
     console.log(chalk.yellow('You have books to read!'));
   } else {
     console.log(chalk.green('All books are read!'));
   }
-  
-  return hasUnread;
 
+  return hasUnread;
 }
 
 function printAllBooks(books) {
@@ -176,12 +183,12 @@ function printAllBooks(books) {
   // Use green for read books, yellow for unread
   // Use cyan for titles
   console.log(chalk.blue('\n--- ALL BOOKS ---'));
-  
+
   if (books.length === 0) {
     console.log(chalk.yellow('No books yet!'));
     return;
   }
-  
+
   for (let i = 0; i < books.length; i++) {
     const book = books[i];
     let status;
@@ -200,11 +207,11 @@ function printSummary(books) {
   // Display total books, read count, unread count
   // Use bold for stats
   console.log(chalk.blue('\n--- READING SUMMARY ---'));
-  
+
   // Total books
   const total = books.length;
   console.log(`Total: ${total}`);
-  
+
   // Count read books
   let readCount = 0;
   for (let i = 0; i < books.length; i++) {
@@ -213,10 +220,9 @@ function printSummary(books) {
     }
   }
   const unreadCount = total - readCount;
-  
+
   console.log(chalk.green(`Read: ${readCount}`));
   console.log(chalk.red(`Unread: ${unreadCount}`));
-
 }
 
 module.exports = {
@@ -229,7 +235,5 @@ module.exports = {
   getTotalBooks,
   hasUnreadBooks,
   printAllBooks,
-  printSummary
-  
-
+  printSummary,
 };

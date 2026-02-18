@@ -11,11 +11,11 @@ function main() {
   // 1. Load books on startup
   let myBooks = readingList.loadBooks();
   // 2. Display all books
-  readingList.showAllBooks(myBooks);
+  readingList.printAllBooks(myBooks);
   // 3. Show summary statistics
   readingList.printSummary(myBooks);
   // 4. Add example of filtering by genre or read/unread status
-  readingList.getBooksByGenre(myBooks);
+  readingList.getBooksByGenre(myBooks, 'Fiction');
   // 5. Add example of marking a book as read
   console.log(chalk.blue('/n === Marking a book as read ==='));
   myBooks = readingList.markAsRead(myBooks);
