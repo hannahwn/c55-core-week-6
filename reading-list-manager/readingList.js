@@ -43,8 +43,29 @@ function saveBooks(books) {
   }
 }
 
-function addBook(book) {
+function addBook(books, titles, author, genre) {
   // TODO: Implement this function
+  //Create new book
+  const newBook = {
+    id: books.length + 1,
+    title: title,
+    author: author,
+    genre: genre,
+    read: false
+  };
+
+  
+  books.push(newBook);
+  
+  
+  saveBooks(books);
+  
+  
+  console.log(chalk.green(`✓ Added "${title}"`));
+  
+  return books;
+
+
 }
 
 function getUnreadBooks() {
