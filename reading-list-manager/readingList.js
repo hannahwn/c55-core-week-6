@@ -220,5 +220,16 @@ function printSummary(books) {
 }
 
 module.exports = {
+  loadBooks,
+  saveBooks,
+  addBook,
+  getUnreadBooks,
+  getBooksByGenre,
+  markAsRead,
+  getTotalBooks,
+  hasUnreadBooks,
+  printAllBooks,
+  printSummary
   
-}
+
+};
