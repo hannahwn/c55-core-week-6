@@ -1,1 +1,62 @@
-[]
+const books = [
+
+  {
+    id: 1,
+    title: "1984",
+    author: "George Orwell",
+    genre: "Fiction",
+    read: false
+  },
+
+  {
+    id: 2,
+    title: "The Havoc of Choice",
+    author: "Wanjiru Koinange",
+    genre: "African Literature",
+    read: true
+  },
+
+  {
+    id: 3,
+    title: "CreepShow",
+    author: "Stephen King",
+    genre: "Comic",
+    read: false
+  },
+
+  {
+    id: 4,
+    title: "Fire and Ice",
+    author: "Erin Hunter",
+    genre: "Fiction",
+    read: true
+  },
+
+  {
+    id: 5,
+    title: "Toxic Bachelors",
+    author: "Daniella Steel",
+    genre: "Adult",
+    read: false
+  },
+
+  {
+    id: 6,
+    title: "Foxes in a fix",
+    author: "Bruce Cameron",
+    genre: "Animals",
+    read: true
+  },
+
+  {
+    id: 7,
+    title: "The Luzhin Defense",
+    author: "Vladimir Nabokov",
+    genre: "Chess",
+    read: false
+  }
+
+  // ... at least 5 books
+];
+
+module.exports = { books };
